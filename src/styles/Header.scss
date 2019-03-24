@@ -1,0 +1,20 @@
+.wrapper {
+  overflow: hidden;
+  height: 25%;
+}
+
+.sliding-background {
+  background: url("../assets/pokemons_7.png") repeat-x;
+  animation: slide 120s linear infinite;
+  height: 100%;
+  width: 11697px;
+}
+
+@keyframes slide {
+  0%{
+    transform: translate3d(0, 0, 0);
+  }
+  100%{
+    transform: translate3d(-1692px, 0, 0);
+  }
+}
