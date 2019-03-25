@@ -23,6 +23,8 @@ function* bootstrapUserData() {
       }
     }
     yield put(UserDataActions.savePokemonsInfo(pokemonsInfoArray));
+    const pokemonTypes = yield call(Api.getPokemonTypes);
+    yield put(UserDataActions.savePokemonTypes(pokemonTypes));
     yield put(LayoutActions.bootstrapFinished(true));
   } catch (e) {
     console.error("Request error", e);

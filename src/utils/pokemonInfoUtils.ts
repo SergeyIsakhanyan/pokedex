@@ -57,3 +57,13 @@ export const sortPokemons = (pokemons: PokemonInfo[], sortValue: string) => {
   }
   return pokemons;
 };
+
+export const sortPokemonsByType = (pokemons: PokemonInfo[], type: string) => {
+  let filteredPokemons = pokemons.filter(item => {
+    let sameType = item.types.find((t: any) => t.type.name === type);
+    if (sameType) {
+      return item;
+    }
+  });
+  return filteredPokemons;
+};

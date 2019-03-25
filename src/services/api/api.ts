@@ -45,4 +45,15 @@ export class Api {
     );
     return response.data;
   }
+
+  public static async getPokemonTypes() {
+    const path = `/type`;
+    const response = await HttpClient.call<PokemonSpeciesDto>(
+      `${SERVER_URL}${path}`,
+      Method.GET,
+      {},
+      {}
+    );
+    return response.data;
+  }
 }

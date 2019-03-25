@@ -9,19 +9,19 @@ function* getPokemonsInfo(action: UserDataAction) {
   let pokemons = yield select(
     (state: StoreState) => state.userData.pokemons.results
   );
-  let pokemonsInfoArray: PokemonInfo[] = [];
-  for (const pokemon of pokemons) {
-    try {
-      const pokemonInfo = yield call(Api.getPokemonInfo, pokemon.name);
-      const extraInfo = yield call(Api.getPokemonSpeciesInfo, pokemon.name);
-      const allInfo = Object.assign({}, pokemonInfo, extraInfo);
-      pokemonsInfoArray.push(allInfo);
-      console.log("pokemonInfo", allInfo);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-  yield put(UserDataActions.savePokemonsInfo(pokemonsInfoArray));
+  // let pokemonsInfoArray: PokemonInfo[] = [];
+  // for (const pokemon of pokemons) {
+  //   try {
+  //     const pokemonInfo = yield call(Api.getPokemonInfo, pokemon.name);
+  //     const extraInfo = yield call(Api.getPokemonSpeciesInfo, pokemon.name);
+  //     const allInfo = Object.assign({}, pokemonInfo, extraInfo);
+  //     pokemonsInfoArray.push(allInfo);
+  //     console.log("pokemonInfo", allInfo);
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // }
+  // yield put(UserDataActions.savePokemonsInfo(pokemonsInfoArray));
 }
 
 function* userDataWatcher() {

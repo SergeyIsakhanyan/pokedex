@@ -2,16 +2,23 @@ import React, { PureComponent } from "react";
 import {
   PokemonInfo,
   UserPokemons,
-  PokemonStatus
+  PokemonStatus,
+  PokemonType
 } from "../../types/pokemonType";
 import PokemonCard from "../../components/Pokemon";
 import "../../styles/Pokemons.scss";
 import SortContainer from "./Sort";
-import { sortPokemons } from "../../utils/pokemonInfoUtils";
+import {
+  sortPokemons,
+  getChipColor,
+  sortPokemonsByType
+} from "../../utils/pokemonInfoUtils";
+import { Chip } from "@material-ui/core";
 
 export interface IPokemonsProps {
   pokemonsInfo: PokemonInfo[];
   userPokemons: UserPokemons[];
+  pokemonTypes: PokemonType[];
   setPokemonStatus: (pokemonId: number, pokemonStatus: PokemonStatus) => void;
 }
 
@@ -94,10 +101,16 @@ export default class Pokemons extends PureComponent<
   };
 
   public handleMenuItemClick = (value: string) => {
-    console.log(value);
     this.setState({
       selectedValue: value,
       pokemonsInfo: sortPokemons(this.props.pokemonsInfo, value)
+    });
+  };
+
+  public onChipClick = (e: any) => {
+    let type = e.currentTarget.id;
+    this.setState({
+      pokemonsInfo: sortPokemonsByType(this.props.pokemonsInfo, type)
     });
   };
 
@@ -108,6 +121,23 @@ export default class Pokemons extends PureComponent<
           selectedValue={this.state.selectedValue}
           handleMenuItemClick={this.handleMenuItemClick}
         />
+        <div className="types-container">
+          {this.props.pokemonTypes.map(item => (
+            <Chip
+              key={item.name}
+              id={item.name}
+              label={item.name}
+              defaultValue={item.name}
+              style={{
+                backgroundColor: getChipColor(item.name),
+                color: "white",
+                margin: 5,
+                minWidth: 75
+              }}
+              onClick={this.onChipClick}
+            />
+          ))}
+        </div>
         <div className="pokemons-container">
           {this.state.pokemonsInfo.map(item => (
             <PokemonCard
