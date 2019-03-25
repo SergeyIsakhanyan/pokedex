@@ -136,3 +136,15 @@ export interface UserPokemons {
   pokemonId: number;
   pokemonStatus: PokemonStatus;
 }
+
+export interface PokemonType {
+  name: string;
+  url: string;
+}
+
+export interface PokemonTypesDto {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: PokemonType[];
+}
