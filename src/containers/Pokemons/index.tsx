@@ -9,7 +9,9 @@ const mapStateToProps = (state: StoreState) => {
   return {
     pokemonsInfo: state.userData.pokemonsInfo,
     userPokemons: state.userData.userPokemons,
-    pokemonTypes: state.userData.pokemonTypes.results
+    pokemonTypes: state.userData.pokemonTypes
+      ? state.userData.pokemonTypes.results
+      : []
   };
 };
 
