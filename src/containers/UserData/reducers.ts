@@ -25,7 +25,12 @@ const initialState: IUserDataState = {
   pokemons: {} as Pokemons,
   pokemonsInfo: [] as PokemonInfo[],
   userPokemons: [] as UserPokemons[],
-  pokemonTypes: {} as PokemonTypesDto
+  pokemonTypes: {
+    count: 20,
+    next: null,
+    previous: null,
+    results: [] as PokemonType[]
+  } as PokemonTypesDto
 };
 
 export const userDataReducer = (

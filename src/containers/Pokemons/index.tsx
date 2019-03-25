@@ -6,12 +6,11 @@ import { UserDataActions } from "../UserData/actions";
 import { PokemonStatus } from "../../types/pokemonType";
 
 const mapStateToProps = (state: StoreState) => {
+  console.log(state.userData.pokemonTypes);
   return {
     pokemonsInfo: state.userData.pokemonsInfo,
-    userPokemons: state.userData.userPokemons,
-    pokemonTypes: state.userData.pokemonTypes
-      ? state.userData.pokemonTypes.results
-      : []
+    userPokemons: state.userData.userPokemons,  
+    pokemonTypes: state.userData.pokemonTypes.results
   };
 };
 
