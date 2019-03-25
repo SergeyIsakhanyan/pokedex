@@ -6,7 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { PokemonInfo } from "../../types/pokemonType";
+import { PokemonInfo, PokemonStatus } from "../../types/pokemonType";
 import AddIcon from "@material-ui/icons/Add";
 import FavIcon from "@material-ui/icons/Favorite";
 import TradeIcon from "@material-ui/icons/CompareArrows";
@@ -19,6 +19,8 @@ import {
 
 interface IPokemonCardProps {
   data: PokemonInfo;
+  pokemonStatus: PokemonStatus;
+  onClick: (name: string, id: number) => void;
 }
 
 interface IPokemonCardState {
@@ -40,7 +42,6 @@ export default class PokemonCard extends PureComponent<
   }
 
   public onHover = () => {
-    console.log("hover");
     this.setState({
       elevation: 6
     });
@@ -50,6 +51,11 @@ export default class PokemonCard extends PureComponent<
     this.setState({
       elevation: 1
     });
+  };
+
+  public onClick = (e: any) => {
+    let name = e.currentTarget.name;
+    this.props.onClick(name, this.props.data.id);
   };
 
   public render() {
@@ -67,16 +73,33 @@ export default class PokemonCard extends PureComponent<
             backgroundSize: "contain"
           }}
           image={pokemon.sprites.front_default}
-          title="Contemplative Reptile"
         />
         <CardActions style={{ display: "inline-flex" }}>
-          <IconButton color="primary">
+          <IconButton
+            onClick={this.onClick}
+            name="wished"
+            style={{
+              color: this.props.pokemonStatus.wished ? "#f50057" : "grey"
+            }}
+          >
             <AddIcon />
           </IconButton>
-          <IconButton color="primary">
+          <IconButton
+            onClick={this.onClick}
+            name="favorite"
+            style={{
+              color: this.props.pokemonStatus.favorite ? "#f50057" : "grey"
+            }}
+          >
             <FavIcon />
           </IconButton>
-          <IconButton color="primary">
+          <IconButton
+            onClick={this.onClick}
+            name="trade"
+            style={{
+              color: this.props.pokemonStatus.trade ? "#f50057" : "grey"
+            }}
+          >
             <TradeIcon />
           </IconButton>
         </CardActions>

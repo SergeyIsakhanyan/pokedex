@@ -1,15 +1,22 @@
 import { UserDataAction } from "./actions";
-import { SAVE_POKEMONS, SAVE_POKEMONS_INFO } from "./constants";
-import { Pokemons, PokemonDto, PokemonInfo } from "../../types/pokemonType";
+import {
+  SAVE_POKEMONS,
+  SAVE_POKEMONS_INFO,
+  SET_POKEMON_STATUS
+} from "./constants";
+import { Pokemons, PokemonInfo, UserPokemons } from "../../types/pokemonType";
+import { addOrUpdatePokemonStatus } from "../../utils/pokemonInfoUtils";
 
 export interface IUserDataState {
   pokemons: Pokemons;
   pokemonsInfo: PokemonInfo[];
+  userPokemons: UserPokemons[];
 }
 
 const initialState: IUserDataState = {
   pokemons: {} as Pokemons,
-  pokemonsInfo: [] as PokemonInfo[]
+  pokemonsInfo: [] as PokemonInfo[],
+  userPokemons: [] as UserPokemons[]
 };
 
 export const userDataReducer = (
@@ -18,7 +25,6 @@ export const userDataReducer = (
 ) => {
   switch (action.type) {
     case SAVE_POKEMONS:
-      console.log(action.payload.pokemons);
       return {
         ...state,
         pokemons: action.payload.pokemons
@@ -27,6 +33,16 @@ export const userDataReducer = (
       return {
         ...state,
         pokemonsInfo: action.payload.pokemonsInfo
+      };
+    case SET_POKEMON_STATUS:
+      let userPokemons = addOrUpdatePokemonStatus(
+        action.payload.pokemonId,
+        action.payload.pokemonStatus,
+        state.userPokemons
+      );
+      return {
+        ...state,
+        userPokemons: [...userPokemons]
       };
     default:
       return state;

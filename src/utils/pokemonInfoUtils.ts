@@ -1,4 +1,5 @@
 import { chipColors } from "./chipColors";
+import { PokemonStatus, UserPokemons } from "../types/pokemonType";
 
 interface FlavorTextEntries {
   flavor_text: string;
@@ -21,4 +22,22 @@ export const upperFirstLetter = (value: string): string => {
 
 export const getChipColor = (name: string) => {
   return chipColors[name];
+};
+
+export const addOrUpdatePokemonStatus = (
+  pokemonId: number,
+  pokemonStatus: PokemonStatus,
+  userPokemons: UserPokemons[]
+) => {
+  let existingPokemonIndex = userPokemons.findIndex(
+    item => item.pokemonId === pokemonId
+  );
+
+  if (existingPokemonIndex === -1) {
+    userPokemons.push({ pokemonId, pokemonStatus });
+    return userPokemons;
+  } else {
+    userPokemons[existingPokemonIndex] = { pokemonId, pokemonStatus };
+    return userPokemons;
+  }
 };
