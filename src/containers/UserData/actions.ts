@@ -2,9 +2,15 @@ import {
   GET_POKEMONS,
   SAVE_POKEMONS,
   GET_POKEMONS_INFO,
-  SAVE_POKEMONS_INFO
+  SAVE_POKEMONS_INFO,
+  SET_POKEMON_STATUS
 } from "./constants";
-import { Pokemons, PokemonDto, PokemonInfo } from "../../types/pokemonType";
+import {
+  Pokemons,
+  PokemonDto,
+  PokemonInfo,
+  PokemonStatus
+} from "../../types/pokemonType";
 
 interface IGetPokemons {
   type: typeof GET_POKEMONS;
@@ -26,11 +32,25 @@ interface ISavePokemonsInfo {
   };
 }
 
+interface IUserPokemons {
+  pokemonId: number;
+  pokemonStatus: PokemonStatus;
+}
+
+interface ISetPokemonStatus {
+  type: typeof SET_POKEMON_STATUS;
+  payload: {
+    pokemonId: number;
+    pokemonStatus: PokemonStatus;
+  };
+}
+
 export type UserDataAction =
   | IGetPokemons
   | ISavePokemons
   | IGetPokemonsInfo
-  | ISavePokemonsInfo;
+  | ISavePokemonsInfo
+  | ISetPokemonStatus;
 
 export class UserDataActions {
   public static getPokemons(): IGetPokemons {
@@ -56,6 +76,19 @@ export class UserDataActions {
     return {
       type: SAVE_POKEMONS_INFO,
       payload: { pokemonsInfo }
+    };
+  }
+
+  public static setPokemonStatus(
+    pokemonId: number,
+    pokemonStatus: PokemonStatus
+  ): UserDataAction {
+    return {
+      type: SET_POKEMON_STATUS,
+      payload: {
+        pokemonId,
+        pokemonStatus
+      }
     };
   }
 }

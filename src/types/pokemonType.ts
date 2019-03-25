@@ -124,3 +124,15 @@ export interface Pokemons {
   previous: string | null;
   results: PokemonDto[];
 }
+
+export interface PokemonStatus {
+  favorite: boolean;
+  trade: boolean;
+  wished: boolean;
+  [key: string]: boolean;
+}
+
+export interface UserPokemons {
+  pokemonId: number;
+  pokemonStatus: PokemonStatus;
+}

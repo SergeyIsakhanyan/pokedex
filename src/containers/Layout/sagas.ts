@@ -5,12 +5,6 @@ import { LAYOUT_BOOTSTRAP_USER_DATA } from "./constants";
 import { PokemonDto, Pokemons, PokemonInfo } from "../../types/pokemonType";
 import { UserDataActions } from "../UserData/actions";
 
-function* getPokemonInfo(pokemonName: string) {
-  return ``;
-  // const pokemonInfo = yield call(Api.getPokemonInfo(pokemonName));
-  //yield put(UserDataActions.saveActivities(projectId, activities));
-}
-
 function* bootstrapUserData() {
   let pokemonsInfoArray: PokemonInfo[] = [];
   try {
