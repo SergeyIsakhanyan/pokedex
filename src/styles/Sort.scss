@@ -1,0 +1,13 @@
+div.sort-container {
+  margin: 10px;
+  .drop-down {
+    min-width: 250px;
+    min-height: 50px;
+    text-align: left;
+    div.select {
+      div {
+        padding-left: 8px;
+      }
+    }
+  }
+}

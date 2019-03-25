@@ -6,6 +6,8 @@ import {
 } from "../../types/pokemonType";
 import PokemonCard from "../../components/Pokemon";
 import "../../styles/Pokemons.scss";
+import SortContainer from "./Sort";
+import { sortPokemons } from "../../utils/pokemonInfoUtils";
 
 export interface IPokemonsProps {
   pokemonsInfo: PokemonInfo[];
@@ -14,7 +16,9 @@ export interface IPokemonsProps {
 }
 
 export interface IPokemonsState {
+  pokemonsInfo: PokemonInfo[];
   userPokemons: UserPokemons[];
+  selectedValue: string;
 }
 
 const defaultPokemonStatus = {
@@ -23,12 +27,26 @@ const defaultPokemonStatus = {
   favorite: false
 };
 
-export default class Pokemons extends PureComponent<IPokemonsProps> {
+export default class Pokemons extends PureComponent<
+  IPokemonsProps,
+  IPokemonsState
+> {
   constructor(props: IPokemonsProps) {
     super(props);
     this.state = {
-      userPokemons: this.props.userPokemons
+      pokemonsInfo: [],
+      userPokemons: this.props.userPokemons,
+      selectedValue: ""
     };
+  }
+
+  public componentDidMount() {
+    this.setState({
+      pokemonsInfo: sortPokemons(
+        this.props.pokemonsInfo,
+        this.state.selectedValue
+      )
+    });
   }
 
   static getDerivedStateFromProps(
@@ -75,17 +93,31 @@ export default class Pokemons extends PureComponent<IPokemonsProps> {
     }
   };
 
+  public handleMenuItemClick = (value: string) => {
+    console.log(value);
+    this.setState({
+      selectedValue: value,
+      pokemonsInfo: sortPokemons(this.props.pokemonsInfo, value)
+    });
+  };
+
   public render() {
     return (
-      <div className="pokemons-container">
-        {this.props.pokemonsInfo.map(item => (
-          <PokemonCard
-            key={item.id}
-            data={item}
-            onClick={this.onClick}
-            pokemonStatus={this.getPokemonStatus(item.id)}
-          />
-        ))}
+      <div>
+        <SortContainer
+          selectedValue={this.state.selectedValue}
+          handleMenuItemClick={this.handleMenuItemClick}
+        />
+        <div className="pokemons-container">
+          {this.state.pokemonsInfo.map(item => (
+            <PokemonCard
+              key={item.id}
+              data={item}
+              onClick={this.onClick}
+              pokemonStatus={this.getPokemonStatus(item.id)}
+            />
+          ))}
+        </div>
       </div>
     );
   }

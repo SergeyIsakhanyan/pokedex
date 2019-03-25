@@ -1,5 +1,6 @@
 import { chipColors } from "./chipColors";
-import { PokemonStatus, UserPokemons } from "../types/pokemonType";
+import { PokemonStatus, UserPokemons, PokemonInfo } from "../types/pokemonType";
+import { options } from "../containers/Pokemons/Sort";
 
 interface FlavorTextEntries {
   flavor_text: string;
@@ -40,4 +41,19 @@ export const addOrUpdatePokemonStatus = (
     userPokemons[existingPokemonIndex] = { pokemonId, pokemonStatus };
     return userPokemons;
   }
+};
+
+export const sortPokemons = (pokemons: PokemonInfo[], sortValue: string) => {
+  if (!sortValue) {
+    return pokemons;
+  } else if (sortValue === options[1].value) {
+    return pokemons.sort((a, b) => a.id - b.id);
+  } else if (sortValue === options[2].value) {
+    return pokemons.sort((a, b) => b.id - a.id);
+  } else if (sortValue === options[3].value) {
+    return pokemons.sort((a, b) => (a.name > b.name ? 1 : -1));
+  } else if (sortValue === options[4].value) {
+    return pokemons.sort((a, b) => (a.name < b.name ? 1 : -1));
+  }
+  return pokemons;
 };
